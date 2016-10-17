@@ -59,13 +59,13 @@ describe('sequelize-encrypted', () => {
     });
 
     it('should support validation', async() => {
-      const VAULT = EncryptedField(Sequelize, key2);
+      const vault = EncryptedField(Sequelize, key2);
       const ValidUser = sequelize.define('validUser', {
           name: Sequelize.STRING,
-          encrypted: VAULT.vault('encrypted'),
+          encrypted: vault.vault('encrypted'),
 
           // encrypted virtual fields
-          private_1: VAULT.field('private_1', {
+          private_1: vault.field('private_1', {
             type: Sequelize.INTEGER,
             validate: {
               notEmpty: true
@@ -76,32 +76,32 @@ describe('sequelize-encrypted', () => {
       user.private_1 = '';
 
       const res = await user.validate();
-      assert.equal(res.message, "Validation error: Validation notEmpty failed");
+      assert.equal(res.message, 'Validation error: Validation notEmpty failed');
     });
 
     it('should support defaultValue', async() => {
-      const VAULT = EncryptedField(Sequelize, key2);
+      const vault = EncryptedField(Sequelize, key2);
       const ValidUser = sequelize.define('validUser', {
           name: Sequelize.STRING,
-          encrypted: VAULT.vault('encrypted'),
+          encrypted: vault.vault('encrypted'),
 
           // encrypted virtual fields
-          private_1: VAULT.field('private_1', {
-            defaultValue: "hello"
+          private_1: vault.field('private_1', {
+            defaultValue: 'hello'
           })
       });
       const user = ValidUser.build();
-      assert.equal(user.private_1, "hello");
+      assert.equal(user.private_1, 'hello');
     });
 
     it('should support allowNull', async() => {
-      const VAULT = EncryptedField(Sequelize, key2);
+      const vault = EncryptedField(Sequelize, key2);
       const ValidUser = sequelize.define('validUser', {
           name: Sequelize.STRING,
-          encrypted: VAULT.vault('encrypted'),
+          encrypted: vault.vault('encrypted'),
 
           // encrypted virtual fields
-          private_1: VAULT.field('private_1', {
+          private_1: vault.field('private_1', {
             allowNull: false
           })
       });
